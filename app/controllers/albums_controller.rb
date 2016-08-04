@@ -1,4 +1,5 @@
 class AlbumsController < ApplicationController
+  before_action :login_check
 
   def new
     @album = Album.new
@@ -53,5 +54,9 @@ class AlbumsController < ApplicationController
 
   def album_params
     params.require(:album).permit(:title, :band_id, :recording_type)
+  end
+
+  def login_check
+    redirect_to new_session_url unless logged_in?
   end
 end

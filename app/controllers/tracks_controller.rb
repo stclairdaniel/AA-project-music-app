@@ -1,4 +1,5 @@
 class TracksController < ApplicationController
+  before_action :login_check
 
   def new
     @track = Track.new
@@ -53,5 +54,9 @@ class TracksController < ApplicationController
   private
   def track_params
     params.require(:track).permit(:name, :album_id, :track_type, :lyrics)
+  end
+
+  def login_check
+    redirect_to new_session_url unless logged_in?
   end
 end

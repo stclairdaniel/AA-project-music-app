@@ -1,4 +1,6 @@
 class BandsController < ApplicationController
+  before_action :login_check
+
   def index
     render :index
   end
@@ -57,5 +59,9 @@ class BandsController < ApplicationController
 
   def band_params
     params.require(:band).permit(:name)
+  end
+
+  def login_check
+    redirect_to new_session_url unless logged_in?
   end
 end
