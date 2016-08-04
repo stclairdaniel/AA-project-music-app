@@ -17,10 +17,13 @@
     <% end %>
   </div>
 
-
-  <% flash[:errors].try(:each) do |error| %>
-    <%= error %>
-  <% end %>
+  <ul>
+    <% flash[:errors].try(:each) do |error| %>
+      <li>
+        <%= error %>
+      </li>
+    <% end %>
+  </ul>
 
 
 <%= yield %>
