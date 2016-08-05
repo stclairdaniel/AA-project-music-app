@@ -25,6 +25,14 @@
     <% end %>
   </ul>
 
+  <ul>
+    <% flash[:notices].try(:each) do |notice| %>
+      <li>
+        <%= notice %>
+      </li>
+    <% end %>
+  </ul>
+
 
 <%= yield %>
 

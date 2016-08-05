@@ -5,12 +5,14 @@ class SessionsController < ApplicationController
   end
 
   def create
-    @user = User.find_by(email: params[:session][:email])
-    if @user && @user.is_password?(params[:session][:password])
+    @user = User.find_by_credentials(params[:session][:email], params[:session][:password])
+    if @user
       login!(@user)
-      redirect_to user_url(@user.id)
+      flash[:notices] ||= []
+      flash[:notices] << "Sucessfully logged in"
+      redirect_to bands_url
     else
-      @user = User.new(email: params[:session][:email])
+      @user = User.new
       flash.now[:errors] ||= []
       flash.now[:errors] << "Incorrect credentials. Please try again."
       render :new
