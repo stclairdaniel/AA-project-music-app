@@ -1,5 +1,5 @@
 class TracksController < ApplicationController
-  before_action :login_check
+  before_action :require_login
 
   def new
     @track = Track.new
@@ -9,10 +9,11 @@ class TracksController < ApplicationController
   def create
     @track = Track.new(track_params)
     if @track.save
+      flash[:notices] << "Track saved"
       redirect_to track_url(@track)
     else
       flash.now[:errors] ||= []
-      flash.now[:errors] << @track.errors.full_messages
+      flash.now[:errors] << [@track.errors.full_messages]
       render :new
     end
   end
@@ -25,10 +26,11 @@ class TracksController < ApplicationController
   def update
     @track = Track.find(params[:id])
     if @track.update(track_params)
+      flash[:notices] << "Track saved"
       redirect_to track_url(@track)
     else
       flash.now[:errors] ||= []
-      flash.now[:errors] << @track.errors.full_messages
+      flash.now[:errors] << [@track.errors.full_messages]
       render :new
     end
   end
@@ -37,6 +39,7 @@ class TracksController < ApplicationController
     @track = Track.find(params[:id])
     album_id = @track.album_id
     @track.destroy
+    flash[:notices] << "Track deleted"
     redirect_to album_url(album_id)
   end
 
@@ -56,7 +59,7 @@ class TracksController < ApplicationController
     params.require(:track).permit(:name, :album_id, :track_type, :lyrics)
   end
 
-  def login_check
+  def require_login
     unless logged_in?
       flash[:errors] ||= []
       flash[:errors] << "Must be logged in to access that content."

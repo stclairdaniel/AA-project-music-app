@@ -21,6 +21,7 @@ class SessionsController < ApplicationController
 
   def destroy
     if current_user
+      flash[:notices] << "You have logged out."
       logout
       redirect_to new_session_url
     end

@@ -13,7 +13,7 @@ class UsersController < ApplicationController
       redirect_to bands_url
     else
       flash.now[:errors] ||= []
-      flash.now[:errors] << @user.errors.full_messages
+      flash.now[:errors] << [@user.errors.full_messages]
       render :new
     end
   end
