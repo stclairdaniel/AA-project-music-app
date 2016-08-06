@@ -1,0 +1,13 @@
+<% @track.notes.each do |note| %>
+  <li>
+    Note:
+    <%= note.content %>
+    Author:
+    <% author = User.find_by(id: note.user_id) %>
+    <%= author.email %>
+    <% if author.id = current_user.id %>
+      <%= button_to "Delete Note", track_note_url(@track, note), method: :delete %>
+    <% end %>
+  </li>
+<% end %>
+</ul>
