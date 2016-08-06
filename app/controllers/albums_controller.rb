@@ -9,11 +9,10 @@ class AlbumsController < ApplicationController
   def create
     @album = Album.new(album_params)
     if @album.save
-      flash[:notices] = "Album saved"
+      flash[:notices] = ["Album saved"]
       redirect_to album_url(@album)
     else
-      flash[:errors] ||= []
-      flash[:errors] << [@album.errors.full_messages]
+      flash[:errors] = [@album.errors.full_messages]
       render :new
     end
   end
@@ -23,8 +22,7 @@ class AlbumsController < ApplicationController
     if @album
       render :show
     else
-      flash[:errors] ||= []
-      flash[:errors] << "Can't find the album you're looking for"
+      flash[:errors] = ["Can't find the album you're looking for"]
       redirect_to bands_url
     end
   end
@@ -37,11 +35,10 @@ class AlbumsController < ApplicationController
   def update
     @album = Album.find(params[:id])
     if @album.update(album_params)
-      flash[:notices] = "Album saved"
+      flash[:notices] = ["Album saved"]
       redirect_to album_url(@album)
     else
-      flash.now[:errors] ||= []
-      flash.now[:errors] << [@album.errors.full_messages]
+      flash.now[:errors] = [@album.errors.full_messages]
       render :edit
     end
   end
@@ -49,7 +46,7 @@ class AlbumsController < ApplicationController
   def destroy
     @album = Album.find(params[:id])
     @album.destroy
-    flash[:notices] = "Album deleted"
+    flash[:notices] = ["Album deleted"]
     redirect_to bands_url
   end
 
@@ -61,8 +58,7 @@ class AlbumsController < ApplicationController
 
   def require_login
     unless logged_in?
-      flash[:errors] ||= []
-      flash[:errors] << "Must be logged in to access that content."
+      flash[:errors] = ["Must be logged in to access that content."]
       redirect_to new_session_url
     end
   end

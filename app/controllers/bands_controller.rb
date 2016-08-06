@@ -13,11 +13,10 @@ class BandsController < ApplicationController
   def create
     @band = Band.new(band_params)
     if @band.save
-      flash[:notices] = "Band saved"
+      flash[:notices] = ["Band saved"]
       redirect_to band_url(@band)
     else
-      flash.now[:errors] ||= []
-      flash.now[:errors] << [@band.errors.full_messages]
+      flash.now[:errors] = [@band.errors.full_messages]
       render :new
     end
   end
@@ -27,8 +26,7 @@ class BandsController < ApplicationController
     if @band
       render :show
     else
-      flash[:errors] ||= []
-      flash[:errors] << "Couldn't find the band you were looking for"
+      flash[:errors] = ["Couldn't find the band you were looking for"]
       redirect_to bands_url
     end
   end
@@ -42,11 +40,10 @@ class BandsController < ApplicationController
     @band = Band.find(params[:id])
     @band.update(band_params)
     if @band.save
-      flash[:notices] = "Band saved"
+      flash[:notices] = ["Band saved"]
       redirect_to band_url(@band)
     else
-      flash.now[:errors] ||= []
-      flash.now[:errors] << [@band.errors.full_messages]
+      flash.now[:errors] = [@band.errors.full_messages]
       render :edit
     end
   end
@@ -65,8 +62,7 @@ class BandsController < ApplicationController
 
   def require_login
     unless logged_in?
-      flash[:errors] ||= []
-      flash[:errors] << "Must be logged in to access that content."
+      flash[:errors] = ["Must be logged in to access that content."]
       redirect_to new_session_url
     end
   end

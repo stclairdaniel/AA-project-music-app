@@ -9,11 +9,10 @@ class TracksController < ApplicationController
   def create
     @track = Track.new(track_params)
     if @track.save
-      flash[:notices] << "Track saved"
+      flash[:notices] = ["Track saved"]
       redirect_to track_url(@track)
     else
-      flash.now[:errors] ||= []
-      flash.now[:errors] << [@track.errors.full_messages]
+      flash.now[:errors] = [@track.errors.full_messages]
       render :new
     end
   end
@@ -26,11 +25,10 @@ class TracksController < ApplicationController
   def update
     @track = Track.find(params[:id])
     if @track.update(track_params)
-      flash[:notices] << "Track saved"
+      flash[:notices] = ["Track saved"]
       redirect_to track_url(@track)
     else
-      flash.now[:errors] ||= []
-      flash.now[:errors] << [@track.errors.full_messages]
+      flash.now[:errors] = [@track.errors.full_messages]
       render :new
     end
   end
@@ -39,7 +37,7 @@ class TracksController < ApplicationController
     @track = Track.find(params[:id])
     album_id = @track.album_id
     @track.destroy
-    flash[:notices] << "Track deleted"
+    flash[:notices] = ["Track deleted"]
     redirect_to album_url(album_id)
   end
 
@@ -48,8 +46,7 @@ class TracksController < ApplicationController
     if @track
       render :show
     else
-      flash[:errors] ||= []
-      flash[:errors] << "Can't find the track you're looking for"
+      flash[:errors] = ["Can't find the track you're looking for"]
       redirect_to bands_url
     end
   end
@@ -61,8 +58,7 @@ class TracksController < ApplicationController
 
   def require_login
     unless logged_in?
-      flash[:errors] ||= []
-      flash[:errors] << "Must be logged in to access that content."
+      flash[:errors] = ["Must be logged in to access that content."]
       redirect_to new_session_url
     end
   end

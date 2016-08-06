@@ -8,20 +8,18 @@ class SessionsController < ApplicationController
     @user = User.find_by_credentials(params[:session][:email], params[:session][:password])
     if @user
       login!(@user)
-      flash[:notices] ||= []
-      flash[:notices] << "Sucessfully logged in"
+      flash[:notices] = ["Sucessfully logged in"]
       redirect_to bands_url
     else
       @user = User.new
-      flash.now[:errors] ||= []
-      flash.now[:errors] << "Incorrect credentials. Please try again."
+      flash.now[:errors] = ["Incorrect credentials. Please try again."]
       render :new
     end
   end
 
   def destroy
     if current_user
-      flash[:notices] << "You have logged out."
+      flash[:notices] = ["You have logged out."]
       logout
       redirect_to new_session_url
     end
