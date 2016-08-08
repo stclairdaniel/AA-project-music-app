@@ -23,5 +23,10 @@
     <% end %>
   </select>
 
+  <label>
+    Lyrics
+    <textarea name="track[lyrics]" rows="8" cols="40"><%= @track.lyrics %></textarea>
+  </label>
+
   <input type="submit" value="Add Track">
 </form>

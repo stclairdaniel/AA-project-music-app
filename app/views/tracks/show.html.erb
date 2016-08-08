@@ -2,6 +2,10 @@
 
 <%= render "notes/note" %>
 <%= render "notes/form" %>
+<br>
+
+<%= ugly_lyrics(@track.lyrics) %>
+<br>
 
 <%= link_to "Write Note", new_track_note_url(@track), method: :get %>
 <%= link_to "Edit Track", edit_track_url, method: :get %>
